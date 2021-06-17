@@ -65,6 +65,11 @@ app.delete(`/api/user/:id`, async (req, res) => {
   
 })
 
+app.get(`/api/aem`, async (req, res) => {
+  const aem = db.get('aem').value();
+  return res.status(200).send(aem);
+});
+
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
