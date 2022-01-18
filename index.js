@@ -8,7 +8,16 @@ const adapter = new FileSync('db.json');
 const db = low(adapter);
 const app = express();
 
+const cors=require("cors");
+const corsOptions ={
+   origin:'*', 
+   credentials:true,            //access-control-allow-credentials:true
+   optionSuccessStatus:200,
+}
 app.use(bodyParser.json());
+app.use(cors(corsOptions)) 
+
+
 
 
 app.get(`/api/users`, async (req, res) => {
@@ -17,8 +26,8 @@ app.get(`/api/users`, async (req, res) => {
 });
 
 app.post(`/api/user`, async (req, res) => {
-  const { name, lastName } = req.body;
-  const id = shortid.generate();
+  const { name, lastName, id  } = req.body;
+  
   db
   .get('users')
   .push({ id, name, lastName })
@@ -53,6 +62,7 @@ app.put(`/api/user`, async (req, res) => {
 });
 
 app.delete(`/api/user/:id`, async (req, res) => {
+  console.log()
   const { id } = req.params;
   
   db.get('users')
